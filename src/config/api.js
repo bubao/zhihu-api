@@ -3,7 +3,7 @@
  * @description 知乎的API
  * @date: 2018-05-17 12:27:02
  * @Last Modified by: bubao
- * @Last Modified time: 2018-05-22 12:13:40
+ * @Last Modified time: 2018-06-11 11:41:39
  */
 
 const zhihu = 'https://www.zhihu.com';
@@ -31,12 +31,13 @@ module.exports = {
 		entire: `${zhihu}/topic/<%= topicID%>/organize/entire?child=<%= ?childID%>&parent=<%= topicID%>`,// 查询下一级的话题
 	},
 	post: {
-		// info: `${zhuanlan}/api/posts/<%= columnsID%>`,
+		// info: `${zhuanlan}/api/posts/<%= postID%>`,
 		info: `${zhihu}/api/v4/columns/<%= columnsID%>?include=title%2Cintro%2Cdescription%2Cimage_url%2Carticles_count%2Cfollowers%2Cis_following%2Clast_article.created`,
+		page: `${zhuanlan}/api/columns/<%= columnsID %>/posts`,
+		columns: `${zhuanlan}/api/columns/<%= columnsID%>`,
 		articles: `${zhihu}/api/v4/columns/<%= columnsID%>/articles?include=data%5B*%5D.admin_closed_comment%2Ccomment_count%2Csuggest_edit%2Cis_title_image_full_screen%2Ccan_comment%2Cupvoted_followees%2Ccan_open_tipjar%2Ccan_tip%2Cvoteup_count%2Cvoting%2Ctopics%2Creview_info%2Cauthor.is_following`,
 		likers: `${zhuanlan}/api/posts/<%= postID%>`,
-		columns: `${zhuanlan}/api/posts/<%= postID%>`,
-		// page: `${zhuanlan}/api/columns/<%= columnsID %>/posts`,
+		// columns: `${zhuanlan}/api/columns/<%= columnsID%>`,
 		// zhuanlan: zhuanlan + '/api/columns/',
 		comments: `${zhuanlan}/api/posts/<%= postID%>/comments`,
 		followers: `${zhuanlan}/api/columns/<%= columnsID%>/followers`,
