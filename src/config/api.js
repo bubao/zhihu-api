@@ -53,7 +53,11 @@ module.exports = {
 		followers: `${zhihu}/api/v4/members/<%= url_token %>/followers?include=data%5B*%5D.answer_count%2Carticles_count%2Cgender%2Cfollower_count%2Cis_followed%2Cis_following%2Cbadge%5B%3F(type%3Dbest_answerer)%5D.topics&offset=0&limit=20`,
 		column_contributions: `${zhihu}/api/v4/members/<%= url_token %>/column-contributions?include=data%5B*%5D.column.intro%2Cfollowers%2Carticles_count&offset=0&limit=20`,
 		zhuanlansFocus: `${zhihu}/api/v4/members/<%= url_token %>/following-columns?include=data%5B*%5D.intro%2Cfollowers%2Carticles_count&offset=0&limit=20`,
+      activities:`${zhihu}/api/v4/members/jian-mo-gu-de-xiao-bai-cai/activities?limit=7&after_id=1542031612&desktop=True`,//查询该用户动态
+      questions: `${zhihu}/api/v4/members/jian-mo-gu-de-xiao-bai-cai/questions?include=data%5B*%5D.created%2Canswer_count%2Cfollower_count%2Cauthor%2Cadmin_closed_comment&offset=0&limit=20`, // 用户提问
+      articles: `${zhihu}/api/v4/members/jian-mo-gu-de-xiao-bai-cai/articles?include=data%5B*%5D.comment_count%2Csuggest_edit%2Cis_normal%2Cthumbnail_extra_info%2Cthumbnail%2Ccan_comment%2Ccomment_permission%2Cadmin_closed_comment%2Ccontent%2Cvoteup_count%2Ccreated%2Cupdated%2Cupvoted_followees%2Cvoting%2Creview_info%2Cis_labeled%2Clabel_info%3Bdata%5B*%5D.author.badge%5B%3F(type%3Dbest_answerer)%5D.topics&offset=0&limit=20&sort_by=created` // 用户文章
 	},
+
 	collection: {
 		// full url: http://www.zhihu.com/collection/25547043?page=1
 		url: `${zhihu}/collection/`,
