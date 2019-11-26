@@ -6,7 +6,7 @@
  * @Last Modified time: 2018-06-11 11:47:11
  */
 
-const { request, timeout } = require("./commonModules");
+const { request, timeout } = require("../config/commonModules");
 const { URL, URLSearchParams } = require("url");
 const url = require("url");
 const forEach = require("lodash/forEach");
@@ -19,16 +19,16 @@ const concat = require("lodash/concat");
 const clamp = require("lodash/clamp");
 const compact = require("lodash/compact");
 
-const loopGet = async (options, v) => {
+const loopGet = async (options, results) => {
 	const { body } = await request(options);
 	const value = JSON.parse(body);
-	v = uniq(compact(concat(value.data, v)));
+	results = uniq(compact(concat(value.data, results)));
 	if (!value.paging.is_end) {
-		await timeout(options.timeout || 10000, v);
+		await timeout(options.timeout || 10000, results);
 		options.uri = value.paging.next;
-		v = await loopGet(options, v);
+		results = await loopGet(options, results);
 	}
-	return v;
+	return results;
 };
 /**
  * 获取url的参数

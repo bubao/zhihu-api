@@ -10,7 +10,7 @@ const { request } = require("../config/commonModules");
 const API = require("../config/api");
 const assign = require("lodash/assign");
 const template = require("lodash/template");
-const { loopMethod, rateMethod } = require("../config/utils");
+const { loopMethod, rateMethod } = require("../module/utils");
 
 /**
  * 通用方法

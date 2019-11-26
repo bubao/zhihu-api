@@ -6,6 +6,4 @@
  * @Last Modified time: 2018-06-11 10:31:47
  */
 
-const api = require("./src/api");
-
-module.exports = api;
+module.exports = require("./src/api");

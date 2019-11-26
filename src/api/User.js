@@ -9,17 +9,16 @@
 const { request } = require("../config/commonModules");
 const template = require("lodash/template");
 const API = require("../config/api");
-const { requestOpts, loopGet } = require("../config/utils");
+const { requestOpts, loopGet } = require("../module/utils");
 
 const followers = async (urlToken, options) => {
 	options.uri = template(API.user.followers)({ url_token: urlToken });
 	const v = await loopGet(options);
 	return v;
 };
-const follower = async (urlToken, options) => {
+const follower = (urlToken, options) => {
 	options.uri = template(API.user.followers)({ url_token: urlToken });
-	const v = await loopGet(options);
-	return v;
+	return loopGet(options);
 };
 /**
  * 通用方法

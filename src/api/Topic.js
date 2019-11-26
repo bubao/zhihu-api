@@ -11,7 +11,7 @@ const template = require("lodash/template");
 const capitalize = require("lodash/capitalize");
 const API = require("../config/api");
 const { request, console } = require("../config/commonModules");
-const { loopGet, requestOpts } = require("../config/utils");
+const { loopGet, requestOpts } = require("../module/utils");
 
 const questions = (topicID, options) => {
 	options.uri = template(API.topic.topQuestion)({ topicID });
