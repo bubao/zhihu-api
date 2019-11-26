@@ -8,17 +8,17 @@ query = {
 	Topic: {
 		timeline_question: {
 			offset: 0,
-			limit: 10,
+			limit: 10
 		},
 		top_activity: {
 			next: {
 				after_id: 4591.28649,
-				limit: 10,
+				limit: 10
 			},
 			previous: {
 				before_id: 0,
-				limit: 10,
-			},
+				limit: 10
+			}
 		}
 	},
 	zhuanlan: {
@@ -34,7 +34,7 @@ query = {
 			limit: 10,
 			offset: 0
 		}
-	},
+	}
 };
 
 module.exports = query;

@@ -6,11 +6,11 @@
  * @Last Modified time: 2018-06-11 11:51:18
  */
 
-const { request } = require('../config/commonModules');
-const API = require('../config/api');
-const assign = require('lodash/assign');
-const template = require('lodash/template');
-const { loopMethod, rateMethod } = require('../config/utils');
+const { request } = require("../config/commonModules");
+const API = require("../config/api");
+const assign = require("lodash/assign");
+const template = require("lodash/template");
+const { loopMethod, rateMethod } = require("../config/utils");
 
 /**
  * 通用方法
@@ -27,37 +27,38 @@ const universalMethod = async (ID, API, countName, infoMethod) => {
 			assign(
 				{
 					options: {
-						urlTemplate,
+						urlTemplate
 					}
 				},
 				rateMethod(count, 20)
-			), resolve);
+			),
+			resolve
+		);
 	});
-
 };
 
 /**
  * 知乎专栏信息
  * @param {string} columnsID //专栏ID
  */
-const info = async (columnsID) => {
+const info = async columnsID => {
 	const urlTemplate = template(API.post.columns)({ columnsID });
 	let object = {};
 	object = {
 		url: urlTemplate,
-		gzip: true,
+		gzip: true
 	};
 	return JSON.parse((await request(object)).body);
-}
+};
 /**
  * 专栏所有post
  * @param {string} columnsID 专栏ID
  */
-const posts = (columnsID) => {
-	return universalMethod(columnsID, API.post.page, 'postsCount', info);
+const posts = columnsID => {
+	return universalMethod(columnsID, API.post.page, "postsCount", info);
 };
 
 module.exports = {
 	info,
-	posts,
-}
+	posts
+};

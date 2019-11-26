@@ -67,3 +67,5 @@ env.json
 .idea/
 
 package-lock.json
+
+yarn.lock

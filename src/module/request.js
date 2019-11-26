@@ -6,9 +6,9 @@
  * @Last Modified time: 2018-05-22 12:30:29
  */
 
-const request = require('request');
-const isFunction = require('lodash/isFunction');
-const fs = require('fs');
+const request = require("request");
+const isFunction = require("lodash/isFunction");
+const fs = require("fs");
 /**
  * @description async版 request 模块
  * @author bubao
@@ -32,39 +32,54 @@ const Get = async (options, callback) => {
 	let read = options.read || 0;
 	let response = 0;
 	let total = 0;
-	const value = await new Promise((resolve) => {
+	const value = await new Promise(resolve => {
 		let buffer = Buffer.alloc(0);
 		const res = request(opts, (error, resp, body) => {
-			resolve({ error, response: resp, body, read, bufferBody: buffer.toString("utf8") });
-		}).on('response', (resp) => {
-			if (resp.headers['content-length'] || size) {
-				response = parseInt(resp.headers['content-length'] || size || 0, 10);
-			}
-		}).on('data', (data) => {
-			read += data.length;
-			if (readable) {
-				buffer = Buffer.concat([buffer, data]);
-			}
-			total = ((size !== undefined || response === undefined) && size >= read) ? size : response || read + 1;
-			if (isFunction(callback)) {
-				callback({
-					completed: read,
-					total,
-					hiden,
-					time: { start },
-					status: {
-						down: '正在下载...',
-						end: '完成\n'
-					}
-				});
-			}
-		});
+			resolve({
+				error,
+				response: resp,
+				body,
+				read,
+				bufferBody: buffer.toString("utf8")
+			});
+		})
+			.on("response", resp => {
+				if (resp.headers["content-length"] || size) {
+					response = parseInt(
+						resp.headers["content-length"] || size || 0,
+						10
+					);
+				}
+			})
+			.on("data", data => {
+				read += data.length;
+				if (readable) {
+					buffer = Buffer.concat([buffer, data]);
+				}
+				total =
+					(size !== undefined || response === undefined) &&
+					size >= read
+						? size
+						: response || read + 1;
+				if (isFunction(callback)) {
+					callback({
+						completed: read,
+						total,
+						hiden,
+						time: { start },
+						status: {
+							down: "正在下载...",
+							end: "完成\n"
+						}
+					});
+				}
+			});
 		// 如果 pipe参数存在，则下载到指定路径
 		if (pipe) {
-			res.pipe(fs.createWriteStream(pipe.out || './'));
+			res.pipe(fs.createWriteStream(pipe.out || "./"));
 		}
 	});
 	return value;
-}
+};
 
 module.exports = Get;
