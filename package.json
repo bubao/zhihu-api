@@ -22,7 +22,7 @@
 		"cheerio": "^1.0.0-rc.2",
 		"lodash": "^4.17.15",
 		"ora": "^2.1.0",
-		"self-promise-request": "git+https://github.com/bubao/self-promise-request.git#v0.0.4",
+		"self-promise-request": "github:bubao/self-promise-request#v0.0.5",
 		"turndown": "^4.0.2"
 	},
 	"devDependencies": {
