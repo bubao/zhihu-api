@@ -3,12 +3,13 @@
  * @description
  * @date: 2018-2-13 14:13:30
  * @Last Modified by: bubao
- * @Last Modified time: 2018-06-11 10:34:25
+ * @Last Modified time: 2019-11-30 19:35:24
  */
 
 const Post = require("./Post");
 const User = require("./User");
 const Topic = require("./Topic");
+const Columns = require("./Columns");
 const API = require("../config/api");
 const template = require("lodash/template");
 
@@ -20,5 +21,6 @@ module.exports = {
 	Post,
 	User,
 	Topic,
+	Columns,
 	APIURL
 };

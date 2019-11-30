@@ -1,4 +1,4 @@
-const request = require("./request");
+const { request } = require("../config/commonModules");
 const cheerio = require("cheerio");
 const fs = require("fs");
 const times = require("lodash/times");
