@@ -64,4 +64,6 @@ nopush
 
 env.json
 
+.idea/
+
 package-lock.json
