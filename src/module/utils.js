@@ -3,7 +3,7 @@
  * @description
  * @date: 2018-5-19 11:32:29
  * @Last Modified by: bubao
- * @Last Modified time: 2019-11-30 19:47:48
+ * @Last Modified time: 2019-12-01 19:08:39
  */
 
 const { request, timeout } = require("../config/commonModules");
@@ -98,7 +98,7 @@ function rateMethod(count, cycle) {
  * @param {object} config 配置信息
  * @param {function} callback 回调函数
  */
-function loopMethod(config, callback, spinner) {
+function loopMethod(config, callback) {
 	const { urlTemplate, ...options } = config.options;
 	const opts = {
 		url: url.resolve(
@@ -115,7 +115,7 @@ function loopMethod(config, callback, spinner) {
 			callback(config.allObject);
 		} else {
 			config.writeTimes += 1;
-			loopMethod(config, callback, spinner);
+			loopMethod(config, callback);
 		}
 	});
 }

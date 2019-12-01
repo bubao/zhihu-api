@@ -3,7 +3,7 @@
  * @description 知乎专栏
  * @date: 2019-04-09 00:18:47
  * @Last Modified by: bubao
- * @Last Modified time: 2019-11-30 21:59:10
+ * @Last Modified time: 2019-12-01 19:11:38
  */
 
 const api = require("../config/api/v4");
@@ -23,7 +23,7 @@ const universalMethod = async (ID, API, countName, infoMethod, spinner) => {
 	const urlTemplate = template(API)({ postID: ID, columnsID: ID });
 	const count = (await infoMethod(ID))[countName];
 	if (spinner) spinner.start();
-	return new Promise(resolve => {
+	const result = new Promise(resolve => {
 		loopMethod(
 			assign(
 				{
@@ -33,10 +33,11 @@ const universalMethod = async (ID, API, countName, infoMethod, spinner) => {
 				},
 				rateMethod(count, 20)
 			),
-			resolve,
-			spinner
+			resolve
 		);
 	});
+	if (spinner) spinner.succeed(`success ${ID}`);
+	return result;
 };
 
 /**
