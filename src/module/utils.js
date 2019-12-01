@@ -3,7 +3,7 @@
  * @description
  * @date: 2018-5-19 11:32:29
  * @Last Modified by: bubao
- * @Last Modified time: 2019-12-01 19:08:39
+ * @Last Modified time: 2019-12-01 23:32:26
  */
 
 const { request, timeout } = require("../config/commonModules");
@@ -12,7 +12,6 @@ const url = require("url");
 const assign = require("lodash/assign");
 const isObject = require("lodash/isObject");
 const forEach = require("lodash/forEach");
-const isNaN = require("lodash/isNaN");
 const template = require("lodash/template");
 const merge = require("lodash/merge");
 const uniq = require("lodash/uniq");
@@ -41,11 +40,12 @@ async function loopGet(options, results) {
  */
 const getURLParams = params => {
 	const { offset, limit, ...other } = params;
-	return {
+	const result = {
 		limit: limit ? clamp(limit, 1, 20) : undefined,
-		"amp;offset": isNaN(offset * limit) ? offset * limit : undefined,
+		offset: offset * limit,
 		...other
 	};
+	return result;
 };
 /**
  * 获取真实url
@@ -53,8 +53,9 @@ const getURLParams = params => {
  * @param {object} params url参数object
  */
 const getTrueURL = (u, params) => {
+	const query = url.parse(u, true).query;
 	u = new URL(u);
-	u.search = new URLSearchParams(getURLParams(params));
+	u.search = new URLSearchParams(getURLParams({ ...query, ...params }));
 	return u.toString();
 };
 

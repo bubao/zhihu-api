@@ -49,6 +49,6 @@ module.exports = {
 		root: `${zhuanlan}/api/columns/<%= columnsID%>`, // 基本信息
 		articles: `${zhuanlan}/api/columns/<%= columnsID %>/articles?include=data%5B*%5D.admin_closed_comment%2Ccomment_count%2Csuggest_edit%2Cis_title_image_full_screen%2Ccan_comment%2Cupvoted_followees%2Ccan_open_tipjar%2Ccan_tip%2Cvoteup_count%2Cvoting%2Ctopics%2Creview_info%2Cauthor.is_following%2Cis_labeled%2Clabel_info`,
 		followers: `${zhuanlan}/api/v4/columns/<%= columnsID %>/followers?include=data%5B*%5D.follower_count%2Cgender%2Cis_followed%2Cis_following&offset=0&limit=10`,
-		coauthors: `https://zhuanlan.zhihu.com/api/columns/<%= columnsID%>/coauthors?filter=all` // 关于
+		coauthors: `${zhuanlan}/api/columns/<%= columnsID%>/coauthors?filter=all` // 关于
 	}
 };

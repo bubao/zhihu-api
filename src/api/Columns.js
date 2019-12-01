@@ -3,114 +3,122 @@
  * @description 知乎专栏
  * @date: 2019-04-09 00:18:47
  * @Last Modified by: bubao
- * @Last Modified time: 2019-12-01 20:41:18
+ * @Last Modified time: 2019-12-02 00:12:12
  */
 
 const api = require("../config/api/v4");
-const { loopMethod, rateMethod, assign, template } = require("../module/utils");
+const { template, getTrueURL } = require("../module/utils");
 const { request } = require("../config/commonModules");
 const cheerio = require("cheerio");
+const EventEmitter = require("events");
 
 /**
- * 通用方法
- * @param {string||number} ID 传入ID
- * @param {string} API 传入api
- * @param {string} countName 传入countName
- * @param {Function} infoMethod 传入方法
+ * 知乎专栏文章
+ *
+ * @class Columns
+ * @extends {EventEmitter}
  */
+class Columns extends EventEmitter {
+	constructor() {
+		super();
+		this.instcance = null;
+		this.api = {
+			info: api.columns.root,
+			coauthors: api.columns.coauthors,
+			articles: api.columns.articles,
+			followers: api.columns.followers
+		};
+	}
 
-const universalMethod = async (ID, API, countName, infoMethod) => {
-	const urlTemplate = template(API)({ postID: ID, columnsID: ID });
-	const count = (await infoMethod(ID))[countName];
-	const result = new Promise(resolve => {
-		loopMethod(
-			assign(
-				{
-					options: {
-						urlTemplate
-					}
-				},
-				rateMethod(count, 20)
-			),
-			resolve
-		);
-	});
-	return result;
-};
+	/**
+	 * 初始化单例实例
+	 *
+	 * @static
+	 * @returns this
+	 * @memberof Columns
+	 */
+	static init() {
+		if (!this.instcance) {
+			this.instcance = new this();
+		}
+		return this.instcance;
+	}
 
-/**
- * 知乎专栏信息
- * @param {string} columnsID //专栏ID
- */
-const zhuanlanInfo = async columnsID => {
-	const urlTemplate = template(api.columns.root)({ columnsID });
-	let object = {};
-	object = {
-		uri: urlTemplate,
-		gzip: true
-	};
-
-	return request(object).then(data => {
-		return JSON.parse(data.body);
-	});
-};
-
-/**
- * 获取单批次文章
- * @param {any} info 数据
- * @param {number} infoLength info 原长度
- * @param {any} spinner ora实例
- * @param {array} [posts=[]] 返回值
- * @returns
- */
-async function getPostsDom(info, infoLength, spinner, posts = []) {
-	let item;
-	if (info.length > 0) {
-		item = info.splice(0, 1)[0];
-		const result = await request({
-			uri: item.url,
-			gzip: true
+	/**
+	 * 专栏基础信息
+	 * @param {string} columnsID 专栏ID
+	 * @returns {Promise} 响应结果
+	 * @memberof Columns
+	 */
+	info(columnsID) {
+		return request({
+			uri: template(this.api.info)({ columnsID }),
+			gzip: true,
+			json: true
 		});
-		posts.push({
-			id: item.id,
-			body: result.body
+	}
+
+	/**
+	 * 专栏作者信息
+	 * @param {string} columnsID 专栏ID
+	 * @returns {Promise} 响应结果
+	 * @memberof Columns
+	 */
+	coauthors(columnsID) {
+		return request({
+			uri: template(this.api.info)({ columnsID }),
+			gzip: true,
+			json: true
 		});
-		if (spinner) spinner.text = `${posts.length}/${infoLength}`;
-		return getPostsDom(info, infoLength, spinner, posts);
-	} else {
+	}
+
+	/**
+	 * 单批次文章简介
+	 * @param {string} columnsID 专栏ID
+	 * @param {number} [limit=20] 数据长度
+	 * @param {number} [offset=0] 偏移量
+	 * @returns {Promise} 响应体[]
+	 * @memberof Columns
+	 */
+	articlesInfo(columnsID, limit = 20, offset = 0) {
+		const UrlTemplate = template(this.api.articles)({ columnsID });
+		const uri = getTrueURL(UrlTemplate, { limit, offset });
+		return request({
+			uri,
+			gzip: true,
+			json: true
+		});
+	}
+
+	/**
+	 * 获取单批次文章内容
+	 * @param {array} info articlesInfo body data
+	 * @returns {Promise} 响应体
+	 * @memberof Columns
+	 */
+	async articles(info) {
+		let item;
+		const posts = [];
+		while (info.length > 0) {
+			item = info.splice(0, 1)[0];
+			const result = await request({
+				uri: item.url,
+				gzip: true
+			});
+			const $ = cheerio.load(result.body);
+			const res = JSON.parse($("#js-initialData").html());
+			const content = res.initialState.entities.articles[item.id];
+			const data = {
+				id: item.id,
+				body: result.body,
+				content
+			};
+			posts.push(data);
+			this.emit("data", data);
+		}
+		this.emit("end", posts);
 		return posts;
 	}
 }
 
-const getJSDom = (JSDom, posts = []) => {
-	let item;
-	if (JSDom.length) {
-		item = JSDom.splice(0, 1)[0];
-		const $ = cheerio.load(item.body);
-		const res = JSON.parse($("#js-initialData").html());
-		const content = res.initialState.entities.articles[item.id];
-		posts.push(content);
-		return getJSDom(JSDom, posts);
-	} else {
-		return posts;
-	}
-};
-/**
- * 专栏所有post
- * @param {string} columnsID 专栏ID
- * @param {object} spinner ora实例
- */
-const zhuanlanPosts = async (columnsID, spinner) => {
-	if (spinner) spinner.start();
-	const info = await universalMethod(
-		columnsID,
-		api.columns.articles,
-		"articles_count",
-		zhuanlanInfo
-	);
-	const JSDom = await getPostsDom(info, info.length, spinner);
-	if (spinner) spinner.succeed(`success ${columnsID}`);
-	return getJSDom(JSDom);
-};
-
-module.exports = zhuanlanPosts;
+module.exports = Columns;
