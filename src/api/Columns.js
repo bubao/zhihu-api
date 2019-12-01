@@ -3,7 +3,7 @@
  * @description 知乎专栏
  * @date: 2019-04-09 00:18:47
  * @Last Modified by: bubao
- * @Last Modified time: 2019-12-01 19:11:38
+ * @Last Modified time: 2019-12-01 20:41:18
  */
 
 const api = require("../config/api/v4");
@@ -19,10 +19,9 @@ const cheerio = require("cheerio");
  * @param {Function} infoMethod 传入方法
  */
 
-const universalMethod = async (ID, API, countName, infoMethod, spinner) => {
+const universalMethod = async (ID, API, countName, infoMethod) => {
 	const urlTemplate = template(API)({ postID: ID, columnsID: ID });
 	const count = (await infoMethod(ID))[countName];
-	if (spinner) spinner.start();
 	const result = new Promise(resolve => {
 		loopMethod(
 			assign(
@@ -36,7 +35,6 @@ const universalMethod = async (ID, API, countName, infoMethod, spinner) => {
 			resolve
 		);
 	});
-	if (spinner) spinner.succeed(`success ${ID}`);
 	return result;
 };
 
@@ -57,28 +55,32 @@ const zhuanlanInfo = async columnsID => {
 	});
 };
 
-const getPostsDom = async (info, posts = []) => {
+/**
+ * 获取单批次文章
+ * @param {any} info 数据
+ * @param {number} infoLength info 原长度
+ * @param {any} spinner ora实例
+ * @param {array} [posts=[]] 返回值
+ * @returns
+ */
+async function getPostsDom(info, infoLength, spinner, posts = []) {
 	let item;
 	if (info.length > 0) {
 		item = info.splice(0, 1)[0];
-		posts.push(
-			await new Promise(resolve => {
-				request({
-					uri: item.url,
-					gzip: true
-				}).then(data => {
-					resolve({
-						id: item.id,
-						body: data.body
-					});
-				});
-			})
-		);
-		return getPostsDom(info, posts);
+		const result = await request({
+			uri: item.url,
+			gzip: true
+		});
+		posts.push({
+			id: item.id,
+			body: result.body
+		});
+		if (spinner) spinner.text = `${posts.length}/${infoLength}`;
+		return getPostsDom(info, infoLength, spinner, posts);
 	} else {
 		return posts;
 	}
-};
+}
 
 const getJSDom = (JSDom, posts = []) => {
 	let item;
@@ -99,14 +101,15 @@ const getJSDom = (JSDom, posts = []) => {
  * @param {object} spinner ora实例
  */
 const zhuanlanPosts = async (columnsID, spinner) => {
+	if (spinner) spinner.start();
 	const info = await universalMethod(
 		columnsID,
 		api.columns.articles,
 		"articles_count",
-		zhuanlanInfo,
-		spinner
+		zhuanlanInfo
 	);
-	const JSDom = await getPostsDom(info);
+	const JSDom = await getPostsDom(info, info.length, spinner);
+	if (spinner) spinner.succeed(`success ${columnsID}`);
 	return getJSDom(JSDom);
 };
 
