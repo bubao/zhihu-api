@@ -1,61 +1,47 @@
 /**
- * @author bubao
- * @description
- * @date: 2018-02-13
- * @Last Modified by: bubao
- * @Last Modified time: 2018-06-11 11:51:18
+ * @Description:
+ * @Author: bubao
+ * @Date: 2018-02-13 15:09:44
+ * @LastEditors: bubao
+ * @LastEditTime: 2020-07-19 07:38:09
  */
 
 const { request } = require("../config/commonModules");
-const API = require("../config/api");
-const assign = require("lodash/assign");
-const template = require("lodash/template");
-const { loopMethod, rateMethod } = require("../module/utils");
-
-/**
- * 通用方法
- * @param {string||number} ID 传入ID
- * @param {string} API 传入api
- * @param {string} countName 传入countName
- * @param {Function} infoMethod 传入方法
- */
-const universalMethod = async (ID, API, countName, infoMethod) => {
-	const urlTemplate = template(API)({ postID: ID, columnsID: ID });
-	const count = (await infoMethod(ID))[countName];
-	return new Promise((resolve, reject) => {
-		loopMethod(
-			assign(
-				{
-					options: {
-						urlTemplate
-					}
-				},
-				rateMethod(count, 20)
-			),
-			resolve
-		);
-	});
-};
+const API = require("../config/api/index");
 
 /**
  * 知乎专栏信息
- * @param {string} columnsID //专栏ID
+ * @param {string} columnsId //专栏ID
  */
-const info = async columnsID => {
-	const urlTemplate = template(API.post.columns)({ columnsID });
-	let object = {};
-	object = {
+const info = async columnsId => {
+	const urlTemplate = API.post.columns({ columnsId });
+	const ReqOps = {
 		url: urlTemplate,
 		gzip: true
 	};
-	return JSON.parse((await request(object)).body);
+	return JSON.parse((await request(ReqOps)).body);
 };
+
 /**
  * 专栏所有post
- * @param {string} columnsID 专栏ID
+ * @param {string} columnsId 专栏ID
  */
-const posts = columnsID => {
-	return universalMethod(columnsID, API.post.page, "postsCount", info);
+const posts = async columnsId => {
+	const urlTemplate = API.post.items({ columnsId });
+	let isEnd = false;
+	const ReqOps = {
+		url: urlTemplate,
+		gzip: true
+	};
+	const postsList = [];
+
+	while (!isEnd) {
+		const postsIteams = JSON.parse((await request(ReqOps)).body);
+		postsList.push(...postsIteams.data);
+		isEnd = postsIteams.paging.is_end;
+		ReqOps.url = postsIteams.paging.next;
+	}
+	return postsList;
 };
 
 module.exports = {

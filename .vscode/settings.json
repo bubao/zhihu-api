@@ -8,8 +8,8 @@
 	// 是否开启eslint检测
 	"eslint.enable": true,
 	// 文件保存时是否根据eslint进行格式化
-	"eslint.autoFixOnSave": true,
-	"eslint.run": "onType",
+	// "eslint.autoFixOnSave": true,
+	"eslint.run": "onSave",
 	//   "workbench.iconTheme": "material-icon-theme",
 	//   "workbench.colorTheme": "Darcula Theme from IntelliJ",
 	"files.eol": "\n",
