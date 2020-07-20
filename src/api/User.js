@@ -1,23 +1,22 @@
 /**
- * @author bubao
- * @description
- * @date: 2018-05-17 13:49:02
- * @Last Modified by: bubao
- * @Last Modified time: 2018-05-23 15:54:15
+ * @description:
+ * @author: bubao
+ * @Date: 2018-05-17 13:49:02
+ * @LastEditors: bubao
+ * @LastEditTime: 2020-07-20 07:19:24
  */
 
 const { request } = require("../config/commonModules");
-const template = require("lodash/template");
-const API = require("../config/api");
+const API = require("../config/api/index");
 const { requestOpts, loopGet } = require("../module/utils");
 
 const followers = async (urlToken, options) => {
-	options.uri = template(API.user.followers)({ url_token: urlToken });
+	options.uri = API.user.followers({ url_token: urlToken });
 	const v = await loopGet(options);
 	return v;
 };
 const follower = (urlToken, options) => {
-	options.uri = template(API.user.followers)({ url_token: urlToken });
+	options.uri = API.user.followers({ url_token: urlToken });
 	return loopGet(options);
 };
 /**
