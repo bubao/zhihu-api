@@ -19,7 +19,7 @@ const EventEmitter = require("events");
  * @extends {EventEmitter}
  */
 class Columns extends EventEmitter {
-	constructor() {
+	constructor () {
 		super();
 		this.instcance = null;
 		this.api = {
@@ -37,7 +37,7 @@ class Columns extends EventEmitter {
 	 * @returns this
 	 * @memberof Columns
 	 */
-	static init() {
+	static init () {
 		if (!this.instcance) {
 			this.instcance = new this();
 		}
@@ -50,7 +50,7 @@ class Columns extends EventEmitter {
 	 * @returns {Promise} 响应结果
 	 * @memberof Columns
 	 */
-	info(columnsID) {
+	info (columnsID) {
 		return request({
 			uri: template(this.api.info)({ columnsID }),
 			gzip: true,
@@ -64,7 +64,7 @@ class Columns extends EventEmitter {
 	 * @returns {Promise} 响应结果
 	 * @memberof Columns
 	 */
-	coauthors(columnsID) {
+	coauthors (columnsID) {
 		return request({
 			uri: template(this.api.info)({ columnsID }),
 			gzip: true,
@@ -80,7 +80,7 @@ class Columns extends EventEmitter {
 	 * @returns {Promise} 响应体[]
 	 * @memberof Columns
 	 */
-	articlesInfo(columnsID, limit = 20, offset = 0) {
+	articlesInfo (columnsID, limit = 20, offset = 0) {
 		const UrlTemplate = template(this.api.articles)({ columnsID });
 		const uri = getTrueURL(UrlTemplate, { limit, offset });
 		return request({
@@ -96,7 +96,7 @@ class Columns extends EventEmitter {
 	 * @returns {Promise} 响应体
 	 * @memberof Columns
 	 */
-	async articles(info) {
+	async articles (info) {
 		let item;
 		const posts = [];
 		while (info.length > 0) {

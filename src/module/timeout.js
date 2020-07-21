@@ -8,7 +8,7 @@
 const ora = require("ora");
 
 let count = 0;
-function timeout(ms, init) {
+function timeout (ms, init) {
 	const spinner = ora({
 		text: `wait 0/${parseInt(ms, 10)} seconds`,
 		spinner: {

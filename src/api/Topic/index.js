@@ -1,23 +1,16 @@
 /**
- * @description:
+ * @description: 话题
  * @author: bubao
- * @Date: 2020-07-08 01:33:46
+ * @Date: 2018-05-17 12:15:31
  * @LastEditors: bubao
- * @LastEditTime: 2020-07-20 07:39:46
- */
-/**
- * @author bubao
- * @description 话题
- * @date: 2018-05-17 12:15:31
- * @Last Modified by: bubao
- * @Last Modified time: 2018-05-22 21:29:47
+ * @LastEditTime: 2020-07-21 18:12:32
  */
 
 const template = require("lodash/template");
 const capitalize = require("lodash/capitalize");
-const API = require("../config/api");
-const { request, console } = require("../config/commonModules");
-const { loopGet, requestOpts } = require("../module/utils");
+const API = require("../../config/api");
+const { request, console } = require("../../config/commonModules");
+const { loopGet, requestOpts } = require("../../module/utils");
 
 const questions = (topicID, options) => {
 	options.uri = template(API.topic.topQuestion)({ topicID });

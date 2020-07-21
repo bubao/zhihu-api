@@ -3,7 +3,7 @@
  * @Author: bubao
  * @Date: 2018-05-17 12:27:02
  * @LastEditors: bubao
- * @LastEditTime: 2020-07-19 07:30:13
+ * @LastEditTime: 2020-07-21 19:38:03
  */
 
 const zhihu = "https://www.zhihu.com";
@@ -94,8 +94,7 @@ module.exports = {
 		 * @param {{url_token:string, options:{limit?:10,offset?:0}}}
 		 */
 		items: ({ columnsId, options = {} }) =>
-			`${zhihu}/api/v4/columns/${columnsId}/items?offset=${options.offset ||
-				0}&limit=${options.limit || 10}`,
+			`${zhihu}/api/v4/columns/${columnsId}/items?offset=${options.offset || 0}&limit=${options.limit || 10}`,
 		/**
 		 * @param {{columnsId:string}}
 		 */
@@ -141,19 +140,19 @@ module.exports = {
 		 */
 		followers: ({ url_token, options = {} }) =>
 			`${zhihu}/api/v4/members/${url_token}/followers?include=data%5B*%5D.answer_count%2Carticles_count%2Cgender%2Cfollower_count%2Cis_followed%2Cis_following%2Cbadge%5B%3F(type%3Dbest_answerer)%5D.topics&offset=${options.offset ||
-				0}&limit=${options.limit || 20}`,
+			0}&limit=${options.limit || 20}`,
 		/**
 		 * @param {{url_token:string, options:{limit?:20,offset?:0}}}
 		 */
 		column_contributions: ({ url_token, options = {} }) =>
 			`${zhihu}/api/v4/members/${url_token}/column-contributions?include=data%5B*%5D.column.intro%2Cfollowers%2Carticles_count&offset=${options.offset ||
-				0}&limit=${options.limit || 20}`,
+			0}&limit=${options.limit || 20}`,
 		/**
 		 * @param {{url_token:string, options:{limit?:20,offset?:0}}}
 		 */
 		zhuanlansFocus: ({ url_token, options = {} }) =>
 			`${zhihu}/api/v4/members/${url_token}/following-columns?include=data%5B*%5D.intro%2Cfollowers%2Carticles_count&offset=${options.offset ||
-				0}&limit=${options.limit || 20}`,
+			0}&limit=${options.limit || 20}`,
 		/**
 		 * 查询该用户动态
 		 * @param {{url_token:string}}
@@ -166,14 +165,40 @@ module.exports = {
 		 */
 		questions: ({ url_token, options = {} }) =>
 			`${zhihu}/api/v4/members/${url_token}/questions?include=data%5B*%5D.created%2Canswer_count%2Cfollower_count%2Cauthor%2Cadmin_closed_comment&offset=${options.offset ||
-				0}&limit=${options.limit || 20}`, // 用户提问
+			0}&limit=${options.limit || 20}`, // 用户提问
 		/**
 		 * 用户文章
 		 * @param  {{url_token:string, options:{limit?:20,offset?:0}}}
 		 */
 		articles: ({ url_token, options = {} }) =>
 			`${zhihu}/api/v4/members/${url_token}/articles?include=data%5B*%5D.comment_count%2Csuggest_edit%2Cis_normal%2Cthumbnail_extra_info%2Cthumbnail%2Ccan_comment%2Ccomment_permission%2Cadmin_closed_comment%2Ccontent%2Cvoteup_count%2Ccreated%2Cupdated%2Cupvoted_followees%2Cvoting%2Creview_info%2Cis_labeled%2Clabel_info%3Bdata%5B*%5D.author.badge%5B%3F(type%3Dbest_answerer)%5D.topics&offset=${options.offset ||
-				0}&limit=${options.limit || 20}&sort_by=created` // 用户文章
+			0}&limit=${options.limit || 20}&sort_by=created` // 用户文章
+	},
+
+	columns: {
+		/**
+		 * 基本信息
+		 * @param {{columnsId:string}}
+		 */
+		root: ({ columnsId }) => `${zhuanlan}/api/columns/${columnsId}`, // 基本信息
+		/**
+		 * 文章
+		 * @param {{columnsId:string}}
+		 */
+		articles: ({ columnsId }) =>
+			`${zhuanlan}/api/columns/${columnsId}/articles?include=data%5B*%5D.admin_closed_comment%2Ccomment_count%2Csuggest_edit%2Cis_title_image_full_screen%2Ccan_comment%2Cupvoted_followees%2Ccan_open_tipjar%2Ccan_tip%2Cvoteup_count%2Cvoting%2Ctopics%2Creview_info%2Cauthor.is_following%2Cis_labeled%2Clabel_info`,
+		/**
+		 * 关注者
+		 * @param {{columnsId:string}}
+		 */
+		followers: ({ columnsId }) =>
+			`${zhuanlan}/api/v4/columns/${columnsId}/followers?include=data%5B*%5D.follower_count%2Cgender%2Cis_followed%2Cis_following&offset=0&limit=10`,
+		/**
+		 * 关于
+		 * @param {{columnsId:string}}
+		 */
+		coauthors: ({ columnsId }) =>
+			`${zhuanlan}/api/columns/${columnsId}/coauthors?filter=all` // 关于
 	},
 
 	collection: {

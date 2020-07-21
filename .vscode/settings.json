@@ -2,14 +2,11 @@
 	"workbench.colorCustomizations": {
 		"tab.unfocusedActiveBorder": "#4391c5"
 	},
-	// "prettier.trailingComma": "none",
-	// "prettier.endOfLine": "lf",
-	// "prettier.semi": true,
 	// 是否开启eslint检测
 	"eslint.enable": true,
 	// 文件保存时是否根据eslint进行格式化
 	// "eslint.autoFixOnSave": true,
-	"eslint.run": "onSave",
+	"eslint.run": "onType",
 	//   "workbench.iconTheme": "material-icon-theme",
 	//   "workbench.colorTheme": "Darcula Theme from IntelliJ",
 	"files.eol": "\n",
@@ -19,6 +16,7 @@
 		// "**/.vscode/**",
 		"**/node_modules/**"
 	],
+	"editor.formatOnSave": false,
 	"editor.tabSize": 4,
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": true

@@ -1,3 +1,10 @@
+/**
+ * @description:
+ * @author: bubao
+ * @Date: 2020-07-20 05:57:38
+ * @LastEditors: bubao
+ * @LastEditTime: 2020-07-21 19:07:32
+ */
 const { Columns } = require("../src/api");
 const { console } = require("../src/config/commonModules");
 
@@ -23,7 +30,7 @@ const columns = Columns.init();
 // 	console.log(data.body);
 // });
 
-async function test(columnsID) {
+async function test (columnsID) {
 	/**
 	 * 获取专栏基础信息
 	 */
@@ -31,7 +38,7 @@ async function test(columnsID) {
 	if (Info.error) {
 		return Info.error;
 	}
-	const { articles_count, title } = Info.body;
+	const { articles_count: articlesCount, title } = Info.body;
 	console.log(title);
 	let next = 0;
 	const limit = 20;
@@ -39,7 +46,7 @@ async function test(columnsID) {
 	columns.on("end", data => {
 		console.log(`${columnsID} end`, data.length);
 	});
-	while (next * limit <= articles_count) {
+	while (next * limit <= articlesCount) {
 		console.log(next * limit);
 		/**
 		 * 获取文章简介

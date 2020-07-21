@@ -1,12 +1,13 @@
 /**
- * @author bubao
- * @description
- * @date: 2018-05-21 13:23:05
- * @Last Modified by: bubao
- * @Last Modified time: 2018-05-21 13:24:40
+ * @description: 话题
+ * @author: bubao
+ * @Date: 2018-05-21 13:23:05
+ * @LastEditors: bubao
+ * @LastEditTime: 2020-07-21 18:12:06
  */
 const topic = require("../src/api/Topic");
-const config = require("./env.json");
+// const config = require("./env.json");
+const config = {};
 const fs = require("fs");
 
 const { console } = require("../src/config/commonModules");

@@ -22,7 +22,7 @@ const compact = require("lodash/compact");
 const requestMethod = options =>
 	request(options).then(res => JSON.parse(res.body));
 
-async function loopGet(options, results) {
+async function loopGet (options, results) {
 	const { body } = await request(options);
 	const value = JSON.parse(body);
 	results = uniq(compact(concat(value.data, results)));
@@ -59,14 +59,14 @@ const getTrueURL = (u, params) => {
 	return u.toString();
 };
 
-function requestOpts(ID, options, templ) {
+function requestOpts (ID, options, templ) {
 	if (isObject(ID)) return merge(options, { uri: template(templ)(ID) });
 	return false;
 }
 
 const times = (count, limit = 20) => (count - (count % limit)) / limit;
 
-function cycleMethod(cycle) {
+function cycleMethod (cycle) {
 	const defaultCycle = 20;
 	if (cycle && cycle !== defaultCycle) {
 		cycle %= defaultCycle;
@@ -80,8 +80,7 @@ function cycleMethod(cycle) {
  * @param {nubmer} count 总数
  * @param {nubmer} cycle 周期
  */
-
-function rateMethod(count, cycle) {
+function rateMethod (count, cycle) {
 	count = count === undefined ? 20 : count;
 	cycle = cycleMethod(cycle);
 	const posts = count % cycle;
@@ -99,7 +98,7 @@ function rateMethod(count, cycle) {
  * @param {object} config 配置信息
  * @param {function} callback 回调函数
  */
-function loopMethod(config, callback) {
+function loopMethod (config, callback) {
 	const { urlTemplate, ...options } = config.options;
 	const opts = {
 		url: url.resolve(

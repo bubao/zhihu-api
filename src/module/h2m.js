@@ -15,7 +15,7 @@ const imgsrc = "![](https://pic1.zhimg.com/";
 const Turndown = new TurndownService();
 
 Turndown.addRule("indentedCodeBlock", {
-	filter(node, options) {
+	filter (node, options) {
 		return (
 			options.codeBlockStyle === "indented" &&
 			node.nodeName === "PRE" &&
@@ -23,7 +23,7 @@ Turndown.addRule("indentedCodeBlock", {
 			node.firstChild.nodeName === "CODE"
 		);
 	},
-	replacement(content, node) {
+	replacement (content, node) {
 		return `'\n\`\`\`${node.firstChild.getAttribute(
 			"class"
 		)}\n${content}\n\`\`\`\n`;

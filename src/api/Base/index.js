@@ -3,10 +3,10 @@
  * @author: bubao
  * @Date: 2020-07-20 07:30:57
  * @LastEditors: bubao
- * @LastEditTime: 2020-07-20 08:10:58
+ * @LastEditTime: 2020-07-21 18:00:10
  */
 
-const { request } = require("../config/commonModules");
+const { request } = require("../../config/commonModules");
 class Base {
 	/**
 	 * @description 获取下一组数据
@@ -15,7 +15,7 @@ class Base {
 	 * @returns
 	 * @memberof Base
 	 */
-	async next() {
+	async next () {
 		const postsIteams = JSON.parse(
 			(await request({ ...this.ReqOps, url: this._next })).body
 		);
@@ -34,7 +34,7 @@ class Base {
 	 * @returns
 	 * @memberof Base
 	 */
-	async all() {
+	async all () {
 		let isEnd = false;
 		const postsList = [];
 
@@ -54,7 +54,7 @@ class Base {
 	 * @returns
 	 * @memberof Base
 	 */
-	async previous() {
+	async previous () {
 		const postsIteams = JSON.parse(
 			(await request({ ...this.ReqOps, url: this._previous })).body
 		);

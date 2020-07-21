@@ -1,13 +1,14 @@
 /**
- * @author bubao
- * @description
- * @date: 2018-05-21 13:21:17
- * @Last Modified by: bubao
- * @Last Modified time: 2018-05-23 16:04:44
+ * @description:
+ * @author: bubao
+ * @Date: 2018-05-21 13:21:17
+ * @LastEditors: bubao
+ * @LastEditTime: 2020-07-21 18:38:04
  */
 
 const User = require("../src/api/User");
-const config = require("./env.json");
+// const config = require("./env.json");
+const config = {};
 const fs = require("fs");
 
 const { console } = require("../src/config/commonModules");
@@ -18,7 +19,7 @@ const { console } = require("../src/config/commonModules");
 // 	});
 // });
 
-User.followers("bu-bao-88", config).then(res => {
+User.followers("binka", config).then(res => {
 	fs.writeFile("./nopush/followers.json", JSON.stringify(res), () => {
 		console.log("followers");
 	});

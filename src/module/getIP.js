@@ -10,7 +10,7 @@ const useful = []; // 保存检查过有效性的代理
 /**
  * 把获取到的有用的代理保存成json文件，以便在别处使用
  */
-function saveProxys() {
+function saveProxys () {
 	fs.writeFileSync("proxys.json", JSON.stringify(useful));
 	console.log("Save finished!");
 }
@@ -18,7 +18,7 @@ function saveProxys() {
 /**
  * 过滤无效的代理
  */
-async function check() {
+async function check () {
 	const url = "https://www.baidu.com/";
 	let flag = proxys.length; // 检查是否所有异步函数都执行完的标志量
 	times(proxys.length, async i => {
@@ -58,7 +58,7 @@ async function check() {
 /**
  * 获取www.xicidaili.com提供的免费代理
  */
-async function getXici() {
+async function getXici () {
 	const url = "http://www.xicidaili.com/nn/"; // 国内高匿代理
 
 	const { body } = await request({

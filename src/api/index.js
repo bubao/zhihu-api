@@ -1,12 +1,12 @@
 /**
- * @author bubao
- * @description
- * @date: 2018-2-13 14:13:30
- * @Last Modified by: bubao
- * @Last Modified time: 2019-11-30 19:35:24
+ * @description:
+ * @author: bubao
+ * @Date: 2018-2-13 14:13:30
+ * @LastEditors: bubao
+ * @LastEditTime: 2020-07-21 19:28:23
  */
 
-const Post = require("./Post");
+const Post = require("./Columns/index");
 const User = require("./User");
 const Topic = require("./Topic");
 const Columns = require("./Columns");
