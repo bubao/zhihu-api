@@ -20,7 +20,7 @@ const { console } = require("../src/config/commonModules");
 })();
 
 (async () => {
-	console.log(await coauthors("oh-hard"))
+	console.log(await coauthors("oh-hard"));
 })();
 
 (async () => {
