@@ -22,24 +22,25 @@
 	"homepage": "https://github.com/bubao/zhihu-api#readme",
 	"dependencies": {
 		"better-console": "^1.0.1",
-		"cheerio": "^1.0.0-rc.2",
-		"lodash": "^4.17.15",
-		"ora": "^2.1.0",
-		"self-promise-request": "github:bubao/self-promise-request#v0.0.5",
-		"turndown": "^4.0.2"
+		"cheerio": "^1.0.0-rc.3",
+		"lodash": "^4.17.19",
+		"ora": "^4.0.5",
+		"request": "^2.88.2",
+		"request-promise": "^4.2.5",
+		"turndown": "^6.0.0"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^8.2.0",
-		"@commitlint/config-conventional": "^8.2.0",
+		"@commitlint/cli": "^9.1.1",
+		"@commitlint/config-conventional": "^9.1.1",
 		"commitizen": "^4.0.3",
 		"cz-customizable": "^6.2.0",
-		"eslint": "^6.6.0",
-		"eslint-config-standard": "^14.1.0",
+		"eslint": "^7.5.0",
+		"eslint-config-standard": "^14.1.1",
 		"eslint-plugin-import": "^2.18.2",
-		"eslint-plugin-node": "^10.0.0",
+		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-promise": "^4.2.1",
 		"eslint-plugin-standard": "^4.0.1",
-		"husky": "^2.2.0"
+		"husky": "^4.2.5"
 	},
 	"husky": {
 		"hooks": {

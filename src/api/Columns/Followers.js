@@ -3,11 +3,10 @@
  * @author: bubao
  * @Date: 2020-07-21 18:40:15
  * @LastEditors: bubao
- * @LastEditTime: 2020-07-21 19:35:50
+ * @LastEditTime: 2020-07-21 23:09:07
  */
 const Base = require("../Base");
 const API = require("../../config/api/index");
-// const { request } = require("../../config/commonModules");
 
 /**
  * @description 知乎专栏关注者
@@ -22,12 +21,13 @@ class Followers extends Base {
 	 * @author bubao
 	 * @date 2020-07-21
 	 * @param {string} columnsId 专栏id
+	 * @param {headers} ReqOps request options
 	 * @memberof Articles
 	 */
-	constructor (columnsId) {
+	constructor (columnsId, ReqOps = {}) {
 		super();
 		if (columnsId) {
-			this.init(columnsId);
+			this.init(columnsId, ReqOps);
 		}
 	}
 
@@ -35,15 +35,20 @@ class Followers extends Base {
 	 * @description 初始化
 	 * @author bubao
 	 * @date 2020-07-21
-	 * @param {string} columnsId
+	 * @param {string} columnsId 专栏id
+	 * @param {headers} ReqOps request options
 	 * @memberof Articles
 	 */
-	init (columnsId) {
+	init (columnsId, ReqOps = {}) {
 		this.ReqOps = {
-			gzip: true,
-			url: API.columns.followers({ columnsId })
+			...this.ReqOps,
+			...{
+				json: true,
+				uri: API.columns.followers({ columnsId })
+			},
+			...ReqOps
 		};
-		this._next = this.ReqOps.url;
+		this._next = this.ReqOps.uri;
 		this.columnsId = columnsId;
 	}
 }

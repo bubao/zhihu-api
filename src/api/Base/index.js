@@ -3,11 +3,17 @@
  * @author: bubao
  * @Date: 2020-07-20 07:30:57
  * @LastEditors: bubao
- * @LastEditTime: 2020-07-21 18:00:10
+ * @LastEditTime: 2020-07-21 22:26:26
  */
 
-const { request } = require("../../config/commonModules");
+const request = require("request-promise");
 class Base {
+	constructor () {
+		this.ReqOps = {
+			json: true
+		};
+	}
+
 	/**
 	 * @description 获取下一组数据
 	 * @author bubao
@@ -16,14 +22,13 @@ class Base {
 	 * @memberof Base
 	 */
 	async next () {
-		const postsIteams = JSON.parse(
-			(await request({ ...this.ReqOps, url: this._next })).body
-		);
+		const options = { ...this.ReqOps, uri: this._next };
+		const postsIteams = await request(options);
 		this.isStart = postsIteams.paging.is_start;
 		this.isEnd = postsIteams.paging.is_end;
 		this._next = postsIteams.paging.next;
 		this._previous = postsIteams.paging.previous;
-		this.ReqOps.url = this._next;
+		this.ReqOps.uri = this._next;
 		return postsIteams;
 	}
 
@@ -39,10 +44,10 @@ class Base {
 		const postsList = [];
 
 		while (!isEnd) {
-			const postsIteams = JSON.parse((await request(this.ReqOps)).body);
+			const postsIteams = await request(this.ReqOps);
 			postsList.push(...postsIteams.data);
 			isEnd = postsIteams.paging.is_end;
-			this.ReqOps.url = postsIteams.paging.next;
+			this.ReqOps.uri = postsIteams.paging.next;
 		}
 		return postsList;
 	}
@@ -55,14 +60,12 @@ class Base {
 	 * @memberof Base
 	 */
 	async previous () {
-		const postsIteams = JSON.parse(
-			(await request({ ...this.ReqOps, url: this._previous })).body
-		);
+		const postsIteams = await request({ ...this.ReqOps, uri: this._previous });
 		this.isStart = postsIteams.paging.is_start;
 		this.isEnd = postsIteams.paging.is_end;
 		this._next = postsIteams.paging.next;
 		this._previous = postsIteams.paging.previous;
-		this.ReqOps.url = this._previous;
+		this.ReqOps.uri = this._previous;
 		return postsIteams;
 	}
 }

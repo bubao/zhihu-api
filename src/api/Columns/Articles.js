@@ -3,7 +3,7 @@
  * @author: bubao
  * @Date: 2020-07-21 18:21:28
  * @LastEditors: bubao
- * @LastEditTime: 2020-07-21 20:43:13
+ * @LastEditTime: 2020-07-21 22:33:42
  */
 const Base = require("../Base");
 const API = require("../../config/api/index");
@@ -39,10 +39,13 @@ class Articles extends Base {
 	 */
 	init (columnsId) {
 		this.ReqOps = {
-			gzip: true,
-			url: API.columns.articles({ columnsId })
+			...this.ReqOps,
+			...{
+				json: true,
+				uri: API.columns.articles({ columnsId })
+			}
 		};
-		this._next = this.ReqOps.url;
+		this._next = this.ReqOps.uri;
 		this.columnsId = columnsId;
 	}
 
@@ -53,8 +56,8 @@ class Articles extends Base {
 	 * @returns
 	 * @memberof Articles
 	 */
-	async info () {
-		return await info(this.columnsId);
+	info () {
+		return info(this.columnsId);
 	}
 }
 

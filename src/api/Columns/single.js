@@ -3,19 +3,20 @@
  * @author: bubao
  * @Date: 2020-07-21 19:33:06
  * @LastEditors: bubao
- * @LastEditTime: 2020-07-21 20:51:22
+ * @LastEditTime: 2020-07-21 23:14:27
  */
 
 const API = require("../../config/api/index");
-const { request } = require("../../config/commonModules");
+const request = require("request-promise");
 
-async function base (url, options = {}) {
+async function base (uri, options = {}) {
 	const ReqOps = {
-		url,
+		uri,
 		gzip: true,
+		json: true,
 		...options
 	};
-	return JSON.parse((await request(ReqOps)).body);
+	return await request(ReqOps);
 }
 
 /**
