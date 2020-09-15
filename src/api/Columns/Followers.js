@@ -3,10 +3,11 @@
  * @author: bubao
  * @Date: 2020-07-21 18:40:15
  * @LastEditors: bubao
- * @LastEditTime: 2020-07-21 23:09:07
+ * @LastEditTime: 2020-09-15 15:56:32
  */
 const Base = require("../Base");
 const API = require("../../config/api/index");
+const { info } = require("./single");
 
 /**
  * @description 知乎专栏关注者
@@ -50,6 +51,17 @@ class Followers extends Base {
 		};
 		this._next = this.ReqOps.uri;
 		this.columnsId = columnsId;
+	}
+
+	/**
+	 * @description 知乎专栏信息
+	 * @author bubao
+	 * @date 2020-07-21
+	 * @returns
+	 * @memberof Followers
+	 */
+	info () {
+		return info(this.columnsId);
 	}
 }
 

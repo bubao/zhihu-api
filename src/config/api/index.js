@@ -3,7 +3,7 @@
  * @Author: bubao
  * @Date: 2018-05-17 12:27:02
  * @LastEditors: bubao
- * @LastEditTime: 2020-07-21 21:59:24
+ * @LastEditTime: 2020-09-15 15:54:56
  */
 
 const zhihu = "https://www.zhihu.com";
@@ -191,8 +191,9 @@ module.exports = {
 		 * 关注者
 		 * @param {{columnsId:string}}
 		 */
-		followers: ({ columnsId }) =>
-			`${zhihu}/api/v4/columns/${columnsId}/followers?include=data%5B*%5D.follower_count%2Cgender%2Cis_followed%2Cis_following&offset=0&limit=10`,
+		// followers: ({ columnsId }) =>
+		// 	`${zhihu}/api/v4/columns/${columnsId}/followers?include=data%5B*%5D.follower_count%2Cgender%2Cis_followed%2Cis_following&offset=0&limit=10`,
+		followers: ({ columnsId }) => `${zhuanlan}/api/columns/${columnsId}/followers`,
 		/**
 		 * 关于
 		 * @param {{columnsId:string}}
