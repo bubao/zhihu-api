@@ -3,12 +3,10 @@
  * @author: bubao
  * @Date: 2020-07-20 05:57:38
  * @LastEditors: bubao
- * @LastEditTime: 2022-08-25 10:20:02
+ * @LastEditTime: 2022-08-25 11:11:55
  */
-const { Columns } = require("../src/api");
+const Items = require("../src/api/Columns/Items");
 const { console } = require("../src/config/commonModules");
-
-const columns = Columns.init();
 
 // /**
 //  * 获取专栏基础信息
@@ -66,10 +64,11 @@ const columns = Columns.init();
 // test("YJango");
 
 async function test (columnsID) {
+	const columns = Items.init(columnsID);
 	/**
 	 * 获取专栏基础信息
 	 */
-	const Info = await columns.info(columnsID);
+	const Info = await columns.info();
 	if (Info.error) {
 		return Info.error;
 	}
@@ -87,7 +86,7 @@ async function test (columnsID) {
 		/**
 		 * 获取文章简介
 		 */
-		const items = await columns.items(columnsID, next);
+		const items = await columns.next();
 		if (items.error) {
 			break;
 		}

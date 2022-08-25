@@ -1,28 +1,28 @@
 /**
- * @description:
- * @author: bubao
- * @Date: 2020-07-21 18:40:15
+ * @Description:
+ * @Author: bubao
+ * @Date: 2022-08-25 10:43:14
  * @LastEditors: bubao
- * @LastEditTime: 2022-08-25 11:13:28
+ * @LastEditTime: 2022-08-25 11:07:12
  */
+
 const Base = require("../Base");
 const API = require("../../config/api/index");
 const { info } = require("./single");
-
 /**
- * @description 知乎专栏关注者
+ * @description 知乎专栏文章
  * @author bubao
  * @date 2020-07-21
- * @class Followers
+ * @class Items
  * @extends {Base}
  */
-class Followers extends Base {
+class Items extends Base {
 	/**
-	 *Creates an instance of Followers.
+	 *Creates an instance of Items.
 	 * @author bubao
 	 * @date 2020-07-21
 	 * @param {string} columnsId 专栏id
-	 * @memberof Followers
+	 * @memberof Items
 	 */
 	constructor (columnsId) {
 		super();
@@ -30,7 +30,7 @@ class Followers extends Base {
 			...this.ReqOps,
 			...{
 				json: true,
-				uri: API.columns.Followers({ columnsId })
+				uri: API.columns.items({ columnsId })
 			}
 		};
 		this._next = this.ReqOps.uri;
@@ -42,11 +42,11 @@ class Followers extends Base {
 	 * @author bubao
 	 * @date 2020-07-21
 	 * @param {string} columnsId
-	 * @memberof Followers
+	 * @memberof Items
 	 */
 	static init (columnsId) {
 		if (!this.instance) {
-			this.instance = new Followers(columnsId);
+			this.instance = new Items(columnsId);
 		}
 		return this.instance;
 	}
@@ -56,11 +56,11 @@ class Followers extends Base {
 	 * @author bubao
 	 * @date 2020-07-21
 	 * @returns
-	 * @memberof Followers
+	 * @memberof Items
 	 */
 	info () {
 		return info(this.columnsId);
 	}
 }
 
-module.exports = Followers;
+module.exports = Items;

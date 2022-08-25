@@ -3,7 +3,7 @@
  * @author: bubao
  * @Date: 2020-07-21 18:21:28
  * @LastEditors: bubao
- * @LastEditTime: 2020-07-21 22:33:42
+ * @LastEditTime: 2022-08-25 10:49:17
  */
 const Base = require("../Base");
 const API = require("../../config/api/index");
@@ -25,19 +25,6 @@ class Articles extends Base {
 	 */
 	constructor (columnsId) {
 		super();
-		if (columnsId) {
-			this.init(columnsId);
-		}
-	}
-
-	/**
-	 * @description 初始化
-	 * @author bubao
-	 * @date 2020-07-21
-	 * @param {string} columnsId
-	 * @memberof Articles
-	 */
-	init (columnsId) {
 		this.ReqOps = {
 			...this.ReqOps,
 			...{
@@ -47,6 +34,20 @@ class Articles extends Base {
 		};
 		this._next = this.ReqOps.uri;
 		this.columnsId = columnsId;
+	}
+
+	/**
+	 * @description 初始化
+	 * @author bubao
+	 * @date 2020-07-21
+	 * @param {string} columnsId
+	 * @memberof Articles
+	 */
+	static init (columnsId) {
+		if (!this.instance) {
+			this.instance = new Articles(columnsId);
+		}
+		return this.instance;
 	}
 
 	/**

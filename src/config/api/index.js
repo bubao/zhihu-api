@@ -3,7 +3,7 @@
  * @Author: bubao
  * @Date: 2018-05-17 12:27:02
  * @LastEditors: bubao
- * @LastEditTime: 2020-09-15 15:54:56
+ * @LastEditTime: 2022-08-25 10:44:04
  */
 
 const zhihu = "https://www.zhihu.com";
@@ -176,6 +176,7 @@ module.exports = {
 	},
 
 	columns: {
+		items: ({ columnsId }) => `${zhihu}/api/v4/columns/${columnsId}/items`,
 		/**
 		 * 基本信息
 		 * @param {{columnsId:string}}
