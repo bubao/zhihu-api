@@ -3,7 +3,7 @@
  * @author: bubao
  * @Date: 2018-2-13 14:13:30
  * @LastEditors: bubao
- * @LastEditTime: 2020-07-21 19:28:23
+ * @LastEditTime: 2022-08-25 11:56:42
  */
 
 const Post = require("./Columns/index");
@@ -16,11 +16,8 @@ const template = require("lodash/template");
 const APIURL = (urlToken, mode, detail) => {
 	return template(API[mode][detail])({ url_token: urlToken });
 };
-
-module.exports = {
-	Post,
-	User,
-	Topic,
-	Columns,
-	APIURL
-};
+exports.Post = Post;
+exports.User = User;
+exports.Topic = Topic;
+exports.Columns = Columns;
+exports.APIURL = APIURL;
