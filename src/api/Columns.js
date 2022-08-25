@@ -26,7 +26,8 @@ class Columns extends EventEmitter {
 			info: api.columns.root,
 			coauthors: api.columns.coauthors,
 			articles: api.columns.articles,
-			followers: api.columns.followers
+			followers: api.columns.followers,
+			items: api.columns.items
 		};
 	}
 
@@ -118,6 +119,28 @@ class Columns extends EventEmitter {
 		}
 		this.emit("end", posts);
 		return posts;
+	}
+
+	/**
+	 * @description
+	 * @author bubao
+	 * @date 2022-08-25 10:08:37
+	 * @param {string} columnsID
+	 * @param {number} [offset=0]
+	 * @param {number} [limit=20]
+	 * @return {any}
+	 * @memberof Columns
+	 */
+	async items (columnsID, offset = 0, limit = 20) {
+		const UrlTemplate = template(this.api.items)({ columnsID });
+		const uri = getTrueURL(UrlTemplate, { limit, offset });
+		console.log(uri);
+
+		return request({
+			uri,
+			gzip: true,
+			json: true
+		});
 	}
 }
 

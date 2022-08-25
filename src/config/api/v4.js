@@ -46,6 +46,7 @@ module.exports = {
 		root_comments: `${zhihu}/api/v4/articles/61406382/root_comments?include=data%5B*%5D.author%2Ccollapsed%2Creply_to_author%2Cdisliked%2Ccontent%2Cvoting%2Cvote_count%2Cis_parent_author%2Cis_author&order=normal&limit=20&offset=0&status=open` // 专栏的评论
 	},
 	columns: {
+		items: `${zhihu}/api/v4/columns/<%= columnsID%>/items`,
 		root: `${zhuanlan}/api/columns/<%= columnsID%>`, // 基本信息
 		articles: `${zhuanlan}/api/columns/<%= columnsID %>/articles?include=data%5B*%5D.admin_closed_comment%2Ccomment_count%2Csuggest_edit%2Cis_title_image_full_screen%2Ccan_comment%2Cupvoted_followees%2Ccan_open_tipjar%2Ccan_tip%2Cvoteup_count%2Cvoting%2Ctopics%2Creview_info%2Cauthor.is_following%2Cis_labeled%2Clabel_info`,
 		followers: `${zhuanlan}/api/v4/columns/<%= columnsID %>/followers?include=data%5B*%5D.follower_count%2Cgender%2Cis_followed%2Cis_following&offset=0&limit=10`,
